@@ -2,4 +2,5 @@ flask==2.0.1
 numpy==1.21.0
 tensorflow==2.6.0
 scikit-learn==0.24.2
-distutils
+setuptools>=65.5.1
+wheel>=0.38.0
