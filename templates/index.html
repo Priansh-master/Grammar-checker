@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nepali-English Grammar Checker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Grammar & Sentence Correction</h1>
+        <p>Enter a sentence. The model will suggest corrections for words that don't fit their context.</p>
+        
+        <form id="grammarForm" onsubmit="checkGrammar(event)">
+            <textarea name="sentence" id="sentence" rows="4" placeholder="e.g., बच्चाहरू स्कुल जान्छु |"></textarea>
+            <button type="submit">Check Sentence</button>
+        </form>
+
+        <div id="result-container" class="result-container" style="display: none">
+            <h2>Result</h2>
+            <p id="original-sentence"></p>
+            <div class="result-box">
+                <ul id="corrections-list"></ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    async function checkGrammar(event) {
+        event.preventDefault();
+        
+        const sentence = document.getElementById('sentence').value;
+        
+        try {
+            const response = await fetch('/check-grammar', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ sentence })
+            });
+            
+            const data = await response.json();
+            
+            // Display results
+            document.getElementById('result-container').style.display = 'block';
+            document.getElementById('original-sentence').innerHTML = 
+                `<strong>Original Sentence:</strong> ${data.original}`;
+            
+            const correctionsList = document.getElementById('corrections-list');
+            correctionsList.innerHTML = '';
+            
+            data.corrections.forEach(correction => {
+                const li = document.createElement('li');
+                li.textContent = correction;
+                correctionsList.appendChild(li);
+            });
+            
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+    </script>
+</body>
+</html>
