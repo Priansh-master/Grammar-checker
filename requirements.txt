@@ -1,6 +1,19 @@
-flask==2.0.1
+Flask==2.0.1
+Werkzeug==2.0.3
+gunicorn==20.1.0
+
+# ML Dependencies
 numpy==1.21.0
-tensorflow==2.6.0
+tensorflow-cpu==2.6.0
 scikit-learn==0.24.2
-setuptools>=65.5.1
-wheel>=0.38.0
+
+# Build Dependencies
+setuptools==59.6.0
+wheel==0.37.1
+
+# Other Dependencies
+click==7.1.2
+itsdangerous==2.0.1
+Jinja2==3.0.1
+MarkupSafe==2.0.1
+six==1.16.0
